@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting;
-using System.Text;
-using System.Threading.Tasks;
 using EasyHook;
+using EasyHookLib.Interfaces;
 
 namespace EasyHookLib.RemoteInjection
 {
     public static class RemoteInjector
     {
-        public static string InjectDll(string dllToInject, string targetExe, int targetPid, out string channelName)
+        public static string InjectDll(string dllToInject, string targetExe, ref int targetPid, out string channelName,
+            INotifyClient notifyClient)
         {
             channelName = null;
             RemoteHooking.IpcCreateServer<PostbackMessageHandler>(ref channelName, WellKnownObjectMode.SingleCall);
@@ -43,6 +41,11 @@ namespace EasyHookLib.RemoteInjection
                         formattableString = $"Created and injected process {targetPid}";
                     }
                 }
+            }
+            if (notifyClient != null)
+            {
+                PostbackMessageHandler.RemoteHookerBasesToNotify.Add(
+                    new Tuple<INotifyClient, int>(notifyClient, targetPid));
             }
             return formattableString;
         }

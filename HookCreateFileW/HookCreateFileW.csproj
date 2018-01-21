@@ -4,43 +4,36 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{82522038-B49F-4330-AA00-B795A6B5BC76}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EasyHookLib</RootNamespace>
-    <AssemblyName>EasyHookLib</AssemblyName>
+    <ProjectGuid>{B500A4BA-ABFD-4DCE-A66B-20150D21E3E9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FileMonitor</RootNamespace>
+    <AssemblyName>FileMonitor</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>EasyHookLib.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EasyHook, Version=2.7.6578.0, Culture=neutral, PublicKeyToken=4b580fca19d0b0c5, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyHook.2.7.6578.1\lib\net40\EasyHook.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -53,20 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hooking\HookerBase.cs" />
-    <Compile Include="Interfaces\INotifyClient.cs" />
-    <Compile Include="Model\HookedEventArgs.cs" />
-    <Compile Include="MonitorInterface\IpcInterface.cs" />
-    <Compile Include="MonitorInterface\MessageEntry.cs" />
-    <Compile Include="MonitorInterface\MessageEventArgs.cs" />
-    <Compile Include="MonitorInterface\ProcessEntry.cs" />
-    <Compile Include="Hooking\RemoteHookerBase.cs" />
-    <Compile Include="RemoteInjection\PostbackMessageHandler.cs" />
-    <Compile Include="RemoteInjection\RemoteInjector.cs" />
+    <Compile Include="ConsoleAsker.cs" />
+    <Compile Include="ConsoleHelper.cs" />
+    <Compile Include="NotifyClient.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\AppConfig.cs" />
-    <Compile Include="Utility\NotifyClientBase.cs" />
-    <Compile Include="Utility\Tracer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CreateProcessAHookLib\CreateProcessHookALib.csproj">
+      <Project>{3ff8c3ec-e50b-425b-bbdf-44c0e51801bd}</Project>
+      <Name>CreateProcessHookALib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EasyHookLib\EasyHookLib.csproj">
+      <Project>{82522038-b49f-4330-aa00-b795a6b5bc76}</Project>
+      <Name>EasyHookLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="EasyHook32.dll">
@@ -88,11 +86,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="EasyHookLib.snk" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
