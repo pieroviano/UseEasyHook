@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyHookLib", "EasyHookLib\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateFileHookLib", "CreateFileHookLib\CreateFileHookLib.csproj", "{CA462E5D-8A32-42EA-9DBD-C256D22FDA21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateProcessHookALib", "CreateProcessAHookLib\CreateProcessHookALib.csproj", "{3FF8C3EC-E50B-425B-BBDF-44C0E51801BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateProcessAHookLib", "CreateProcessAHookLib\CreateProcessAHookLib.csproj", "{3FF8C3EC-E50B-425B-BBDF-44C0E51801BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateProcessHookWLib", "CreateProcessWHookLib\CreateProcessHookWLib.csproj", "{B6DD82C2-A51A-4AB6-8273-1D717416FDCA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateProcessWHookLib", "CreateProcessWHookLib\CreateProcessWHookLib.csproj", "{B6DD82C2-A51A-4AB6-8273-1D717416FDCA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreateProcessHookLib", "CreateProcessHookLib\CreateProcessHookLib.csproj", "{10C0B98B-C1AE-4598-8AC1-FDD97C07D002}"
 EndProject

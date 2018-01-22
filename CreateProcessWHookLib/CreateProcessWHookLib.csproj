@@ -7,8 +7,8 @@
     <ProjectGuid>{B6DD82C2-A51A-4AB6-8273-1D717416FDCA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CreateProcessHookWLib</RootNamespace>
-    <AssemblyName>CreateProcessHookWLib</AssemblyName>
+    <RootNamespace>CreateProcessWHookLib</RootNamespace>
+    <AssemblyName>CreateProcessWHookLib</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,8 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateProcessWHooker.cs" />
-    <Compile Include="Delegates\CreateProcessDelegateW.cs" />
+    <Compile Include="CreateProcessWHookerImplementation.cs" />
+    <Compile Include="CreateProcesWRemoteHooker.cs" />
+    <Compile Include="Delegates\CreateProcessWDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32\Model\StartupInfoW.cs" />
+    <Compile Include="Win32\Win32Interop.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CreateProcessHookLib\CreateProcessHookLib.csproj">

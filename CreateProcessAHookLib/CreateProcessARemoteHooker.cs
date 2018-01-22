@@ -1,30 +1,32 @@
 ﻿using System;
-using CreateProcessAHookLib.Delegates;
 using CreateProcessAHookLib.Win32.Model;
-using CreateProcessHookALib;
 using CreateProcessHookLib.Win32.Model;
 using EasyHook;
 using EasyHookLib.Hooking;
 
 namespace CreateProcessAHookLib
 {
-    public class CreateProcessAHooker : HookerBase
+    public class CreateProcessARemoteHooker : RemoteHookerBase
     {
-        private readonly CreateProcessAHookerImplementation<CreateProcessAHooker> _createProcessAHookerImplementation;
+        private readonly CreateProcessAHookerImplementation<CreateProcessARemoteHooker>
+            _createProcessAHookerImplementation;
 
-        public CreateProcessAHooker()
+        public CreateProcessARemoteHooker(
+            RemoteHooking.IContext inContext,
+            string inChannelName) : base(inContext, inChannelName)
         {
-            _createProcessAHookerImplementation = new CreateProcessAHookerImplementation<CreateProcessAHooker>(this);
+            _createProcessAHookerImplementation =
+                new CreateProcessAHookerImplementation<CreateProcessARemoteHooker>(this);
         }
 
-        protected override object CallMethod(object[] parameters, out Tuple<string, object>[]tuplesForNotification)
+        protected override object CallMethod(object[] parameters, out Tuple<string, object>[] tuplesForNotification)
         {
             return _createProcessAHookerImplementation.CallMethod(parameters, out tuplesForNotification);
         }
 
         public override LocalHook CreateHook()
         {
-            return _createProcessAHookerImplementation.CreateHook(null, new CreateProcessADelegate(CreateProcessHandler));
+            return _createProcessAHookerImplementation.CreateHook(this, null);
         }
 
         public bool CreateProcessHandler(string lpApplicationName, string lpCommandLine,
@@ -32,7 +34,8 @@ namespace CreateProcessAHookLib
             bool bInheritHandles, uint dwCreationFlags, IntPtr lpEnvironment,
             string lpCurrentDirectory, ref StartupInfoA lpStartupInfo, ref ProcessInformation pInfo)
         {
-            return _createProcessAHookerImplementation.CreateProcessHandler(lpApplicationName, lpCommandLine,
+            return CreateProcessAHookerImplementation<CreateProcessARemoteHooker>.CreateProcessHandlerStatic(
+                lpApplicationName, lpCommandLine,
                 lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment,
                 lpCurrentDirectory, lpStartupInfo, pInfo);
         }

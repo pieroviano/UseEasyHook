@@ -79,9 +79,9 @@
       <Project>{10c0b98b-c1ae-4598-8ac1-fdd97c07d002}</Project>
       <Name>CreateProcessHookLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CreateProcessWHookLib\CreateProcessHookWLib.csproj">
+    <ProjectReference Include="..\CreateProcessWHookLib\CreateProcessWHookLib.csproj">
       <Project>{b6dd82c2-a51a-4ab6-8273-1d717416fdca}</Project>
-      <Name>CreateProcessHookWLib</Name>
+      <Name>CreateProcessWHookLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\EasyHookLib\EasyHookLib.csproj">
       <Project>{82522038-b49f-4330-aa00-b795a6b5bc76}</Project>

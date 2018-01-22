@@ -31,6 +31,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>CreaateFileHookerLib.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EasyHook, Version=2.7.6578.0, Culture=neutral, PublicKeyToken=4b580fca19d0b0c5, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyHook.2.7.6578.1\lib\net40\EasyHook.dll</HintPath>
@@ -54,12 +60,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="CreaateFileHookerLib.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CreateProcessAHookLib\CreateProcessHookALib.csproj">
+    <ProjectReference Include="..\CreateProcessAHookLib\CreateProcessAHookLib.csproj">
       <Project>{3ff8c3ec-e50b-425b-bbdf-44c0e51801bd}</Project>
-      <Name>CreateProcessHookALib</Name>
+      <Name>CreateProcessAHookLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\EasyHookLib\EasyHookLib.csproj">
       <Project>{82522038-b49f-4330-aa00-b795a6b5bc76}</Project>

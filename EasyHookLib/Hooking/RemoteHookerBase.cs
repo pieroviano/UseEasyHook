@@ -32,7 +32,7 @@ namespace EasyHookLib.Hooking
         public bool NotifyImmedialety { get; set; }
 
         // this is where we are intercepting all file accesses!
-        protected static object CallMethodAndNotifyHookerStatic(params object[] parameters)
+        public static object CallMethodAndNotifyHookerStatic(params object[] parameters)
         {
             RemoteHookerBase This = null;
             var fileHooked = IntPtr.Zero;

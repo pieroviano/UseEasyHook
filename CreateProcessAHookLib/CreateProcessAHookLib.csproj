@@ -7,8 +7,8 @@
     <ProjectGuid>{3FF8C3EC-E50B-425B-BBDF-44C0E51801BD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CreateProcessHookALib</RootNamespace>
-    <AssemblyName>CreateProcessHookALib</AssemblyName>
+    <RootNamespace>CreateProcessAHookLib</RootNamespace>
+    <AssemblyName>CreateProcessAHookLib</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -51,8 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateProcessAHooker.cs" />
-    <Compile Include="Delegates\CreateProcessDelegateA.cs" />
+    <Compile Include="CreateProcessAHookerImplementation.cs" />
+    <Compile Include="CreateProcessARemoteHooker.cs" />
+    <Compile Include="Delegates\CreateProcessADelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32\Model\StartupInfoA.cs" />
+    <Compile Include="Win32\Win32Interop.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CreateProcessHookLib\CreateProcessHookLib.csproj">

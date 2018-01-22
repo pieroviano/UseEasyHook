@@ -75,9 +75,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CreateProcessAHookLib\CreateProcessHookALib.csproj">
+    <ProjectReference Include="..\CreateProcessAHookLib\CreateProcessAHookLib.csproj">
       <Project>{3ff8c3ec-e50b-425b-bbdf-44c0e51801bd}</Project>
-      <Name>CreateProcessHookALib</Name>
+      <Name>CreateProcessAHookLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\CreateProcessHookLib\CreateProcessHookLib.csproj">
       <Project>{10c0b98b-c1ae-4598-8ac1-fdd97c07d002}</Project>

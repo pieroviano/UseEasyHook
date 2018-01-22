@@ -1,14 +1,14 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CreateProcessHookLib.Win32.Model
+namespace CreateProcessAHookLib.Win32.Model
 {
-    public struct StartupInfoW
+    public struct StartupInfoA
     {
         public uint Cb;
-        [MarshalAs(UnmanagedType.LPWStr)] public string LpReserved;
-        [MarshalAs(UnmanagedType.LPWStr)] public string LpDesktop;
-        [MarshalAs(UnmanagedType.LPWStr)] public string LpTitle;
+        [MarshalAs(UnmanagedType.BStr)] public string LpReserved;
+        [MarshalAs(UnmanagedType.BStr)] public string LpDesktop;
+        [MarshalAs(UnmanagedType.BStr)] public string LpTitle;
         public uint DwX;
         public uint DwY;
         public uint DwXSize;

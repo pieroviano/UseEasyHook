@@ -29,6 +29,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>CreateProcessHookLib.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,9 +50,10 @@
     <Compile Include="Win32\Model\ProcessCreationFlags.cs" />
     <Compile Include="Win32\Model\ProcessInformation.cs" />
     <Compile Include="Win32\Model\SecurityAttributes.cs" />
-    <Compile Include="Win32\Model\StartupInfoA.cs" />
-    <Compile Include="Win32\Model\StartupInfoW.cs" />
     <Compile Include="Win32\Win32Interop.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CreateProcessHookLib.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
