@@ -29,7 +29,7 @@ namespace CreateProcessAHookLib
             return _createProcessAHookerImplementation.CreateHook(this, null);
         }
 
-        public bool CreateProcessHandler(string lpApplicationName, string lpCommandLine,
+        public static bool CreateProcessHandler(string lpApplicationName, string lpCommandLine,
             IntPtr lpProcessAttributes, IntPtr lpThreadAttributes,
             bool bInheritHandles, uint dwCreationFlags, IntPtr lpEnvironment,
             string lpCurrentDirectory, ref StartupInfoA lpStartupInfo, ref ProcessInformation pInfo)

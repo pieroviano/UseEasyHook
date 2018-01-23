@@ -22,7 +22,7 @@ namespace CreateProcessWHookLib
             return _createProcessWHookerImplementation.CallMethod(parameters, out tuplesForNotification);
         }
 
-        public bool CreateProcessHandler(string lpApplicationName, string lpCommandLine,
+        public static bool CreateProcessHandler(string lpApplicationName, string lpCommandLine,
             IntPtr lpProcessAttributes, IntPtr lpThreadAttributes,
             bool bInheritHandles, uint dwCreationFlags, IntPtr lpEnvironment,
             string lpCurrentDirectory, ref StartupInfoW lpStartupInfo, ref ProcessInformation pInfo)

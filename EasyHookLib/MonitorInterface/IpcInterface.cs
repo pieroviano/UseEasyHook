@@ -74,10 +74,7 @@ namespace EasyHookLib.MonitorInterface
         /// <param name="message">The string message to post.</param>
         public void PostMessage(string message)
         {
-            if (OnMessagePosted != null)
-            {
-                OnMessagePosted(this, new MessageEventArgs(message));
-            }
+            OnMessagePosted?.Invoke(this, new MessageEventArgs(message));
         }
     }
 }

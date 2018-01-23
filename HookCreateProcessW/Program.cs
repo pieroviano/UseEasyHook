@@ -4,16 +4,28 @@ using CreateProcessHookLib.Win32.Model;
 using CreateProcessWHookLib;
 using CreateProcessWHookLib.Win32.Model;
 using EasyHookLib.Model;
+using EasyHookLib.RemoteInjection;
 using Win32Interop = CreateProcessWHookLib.Win32.Win32Interop;
 
 namespace HookCreateProcessW
 {
     public class Program
     {
+
         private static void CreateProcessWHooker_ProcessCreated(object sender, HookedEventArgs e)
         {
-            Console.WriteLine("Process ID (PID): " + e.Entries["DwProcessId"]);
-            Console.WriteLine("Process Handle : " + e.Entries["HProcess"]);
+            var processId = Convert.ToInt32(e.Entries["DwProcessId"]);
+            Console.WriteLine($"Process ID (PID): {processId}");
+            Console.WriteLine($"Process Handle: {e.Entries["HProcess"]}");
+            var dllToInject = "CreateProcessWHookLib.dll";
+            var notifyClient = new NotifyClient();
+            string channelName;
+            var formattableString = RemoteInjector.InjectDll(dllToInject, "", ref processId, out channelName, notifyClient);
+            if (!string.IsNullOrEmpty(formattableString))
+            {
+                Console.WriteLine(formattableString);
+            }
+
         }
 
         private static void DoCreateProcessW()

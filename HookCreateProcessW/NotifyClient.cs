@@ -1,7 +1,7 @@
 using System;
 using EasyHookLib.Utility;
 
-namespace HookCreateFileW
+namespace HookCreateProcessW
 {
     public class NotifyClient : NotifyClientBase
     {

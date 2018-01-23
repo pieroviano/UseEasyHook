@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace FileMonitor
+namespace HookCreateFileW
 {
     internal static class ConsoleAsker
     {

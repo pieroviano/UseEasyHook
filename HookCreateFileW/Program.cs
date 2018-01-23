@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
-using EasyHookLib;
 using EasyHookLib.RemoteInjection;
 
-namespace FileMonitor
+namespace HookCreateFileW
 {
     internal class Program
     {

@@ -1,25 +1,28 @@
 using System;
 using System.IO;
 
-static internal class ConsoleHelper
+namespace HookCreateFileW
 {
-    public static string AskTargetExe(ref string[] args)
+    internal static class ConsoleHelper
     {
-        if (args.Length != 1 || !File.Exists(args[0]))
+        public static string AskTargetExe(ref string[] args)
         {
-            Console.WriteLine();
-            Console.WriteLine("Usage: FileMon %PID%");
-            Console.WriteLine("   or: FileMon PathToExecutable");
-            Console.WriteLine();
-            Console.Write("Please enter a process Id or path to executable: ");
-
-            args = new[] {Console.ReadLine()};
-
-            if (String.IsNullOrEmpty(args[0]))
+            if (args.Length != 1 || !File.Exists(args[0]))
             {
-                return null;
+                Console.WriteLine();
+                Console.WriteLine("Usage: FileMon %PID%");
+                Console.WriteLine("   or: FileMon PathToExecutable");
+                Console.WriteLine();
+                Console.Write("Please enter a process Id or path to executable: ");
+
+                args = new[] {Console.ReadLine()};
+
+                if (String.IsNullOrEmpty(args[0]))
+                {
+                    return null;
+                }
             }
+            return args[0];
         }
-        return args[0];
     }
 }
