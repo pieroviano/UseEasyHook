@@ -1,7 +1,8 @@
 ﻿using System;
-using CreateProcessAHookLib.Win32.Model;
-using CreateProcessHookALib.Win32;
+using CreateProcessAHookLib.Delegates;
+using CreateProcessHookLib.Win32;
 using CreateProcessHookLib.Win32.Model;
+using CreateProcessHookLib.Win32.ModelA;
 using EasyHook;
 using EasyHookLib.Hooking;
 
@@ -30,31 +31,25 @@ namespace CreateProcessAHookLib
             tuplesForNotification = new[]
             {
                 new Tuple<string, object>("DwProcessId", pInfo.DwProcessId),
-                new Tuple<string, object>("HProcess", pInfo.HProcess)
+                new Tuple<string, object>("HProcess", pInfo.HProcess),
+                new Tuple<string, object>("HThread", pInfo.HThread)
             };
             return processHook;
         }
 
-        public LocalHook CreateHook(T This, Delegate createProcessDelegateA)
+        public LocalHook CreateHook(T This, Delegate @delegate)
         {
-            return _t.HookMethod("kernel32.dll", "CreateProcessA", createProcessDelegateA, This);
-        }
-
-        public static bool CreateProcessHandlerStatic(string lpApplicationName, string lpCommandLine, IntPtr lpProcessAttributes,
-            IntPtr lpThreadAttributes, bool bInheritHandles, uint dwCreationFlags, IntPtr lpEnvironment,
-            string lpCurrentDirectory, StartupInfoA lpStartupInfo, ProcessInformation pInfo)
-        {
-            var createProcessAHookerImplementation = new CreateProcessAHookerImplementation<T>(null);
-            return createProcessAHookerImplementation.CreateProcessHandler(lpApplicationName, lpCommandLine,
-                lpProcessAttributes,
-                lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment,
-                lpCurrentDirectory, lpStartupInfo, pInfo);
+            return _t.HookMethod("kernel32.dll", "CreateProcessA",
+                @delegate == null
+                    ? new CreateProcessADelegate(CreateProcessAHookerImplementation<CreateProcessARemoteHooker>
+                        .CreateProcessHandlerStatic)
+                    : @delegate, This);
         }
 
         public bool CreateProcessHandler(string lpApplicationName, string lpCommandLine, IntPtr lpProcessAttributes,
-                IntPtr lpThreadAttributes, bool bInheritHandles, uint dwCreationFlags, IntPtr lpEnvironment,
-                string lpCurrentDirectory, StartupInfoA lpStartupInfo, ProcessInformation pInfo)
-            {
+            IntPtr lpThreadAttributes, bool bInheritHandles, uint dwCreationFlags, IntPtr lpEnvironment,
+            string lpCurrentDirectory, ref StartupInfoA lpStartupInfo, ref ProcessInformation pInfo)
+        {
             var processHook = false;
             var parameters = new object[]
             {
@@ -64,15 +59,27 @@ namespace CreateProcessAHookLib
             };
             if (_t == null)
             {
-                processHook = (bool)RemoteHookerBase.CallMethodAndNotifyHookerStatic(parameters);
+                processHook = (bool) RemoteHookerBase.CallMethodAndNotifyHookerStatic(parameters);
             }
             else
             {
-                processHook = (bool)_t.CallMethodAndNotifyHooker(parameters);
+                processHook = (bool) _t.CallMethodAndNotifyHooker(parameters);
             }
-            var threadHandle = ((ProcessInformation) parameters[parameters.Length - 1]).HThread;
-            CreateProcessHookLib.Win32.Win32Interop.ResumeThread(threadHandle);
+            lpStartupInfo = (StartupInfoA) parameters[parameters.Length - 2];
+            pInfo = (ProcessInformation) parameters[parameters.Length - 1];
             return processHook;
+        }
+
+        public static bool CreateProcessHandlerStatic(string lpApplicationName, string lpCommandLine,
+            IntPtr lpProcessAttributes,
+            IntPtr lpThreadAttributes, bool bInheritHandles, uint dwCreationFlags, IntPtr lpEnvironment,
+            string lpCurrentDirectory, ref StartupInfoA lpStartupInfo, ref ProcessInformation pInfo)
+        {
+            var createProcessAHookerImplementation = new CreateProcessAHookerImplementation<T>(null);
+            return createProcessAHookerImplementation.CreateProcessHandler(lpApplicationName, lpCommandLine,
+                lpProcessAttributes,
+                lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment,
+                lpCurrentDirectory, ref lpStartupInfo, ref pInfo);
         }
     }
 }

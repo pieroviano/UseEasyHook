@@ -1,14 +1,15 @@
 using System;
 using System.Runtime.InteropServices;
-using CreateProcessAHookLib.Win32.Model;
 using CreateProcessHookLib.Win32.Model;
+using CreateProcessWHookLib.Win32.Model;
 
-namespace CreateProcessHookALib.Win32
+namespace CreateProcessWHookLib.Win32
 {
-    public static class Win32Interop
+    public static class Win32WInterop
     {
-        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Ansi, EntryPoint = "CreateProcessA")]
-        public static extern bool CreateProcessA(
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateProcessW")]
+        public static extern bool CreateProcessW(
             string lpApplicationName,
             string lpCommandLine,
             IntPtr lpProcessAttributes,
@@ -17,7 +18,7 @@ namespace CreateProcessHookALib.Win32
             uint dwCreationFlags,
             IntPtr lpEnvironment,
             string lpCurrentDirectory,
-            [In] ref StartupInfoA lpStartupInfo,
+            [In] ref StartupInfoW lpStartupInfo,
             ref ProcessInformation lpProcessInformation);
 
     }

@@ -55,8 +55,6 @@
     <Compile Include="CreateProcessARemoteHooker.cs" />
     <Compile Include="Delegates\CreateProcessADelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Win32\Model\StartupInfoA.cs" />
-    <Compile Include="Win32\Win32Interop.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CreateProcessHookLib\CreateProcessHookLib.csproj">

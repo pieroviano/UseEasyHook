@@ -30,7 +30,7 @@ namespace CreateProcessWHookLib
             return CreateProcessWHookerImplementation<CreateProcessWRemoteHooker>.CreateProcessHandlerStatic(
                 lpApplicationName, lpCommandLine,
                 lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment,
-                lpCurrentDirectory, lpStartupInfo, pInfo);
+                lpCurrentDirectory, ref lpStartupInfo, ref pInfo);
         }
 
         public override LocalHook CreateHook()

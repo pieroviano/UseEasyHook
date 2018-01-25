@@ -56,7 +56,7 @@
     <Compile Include="Delegates\CreateProcessWDelegate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Win32\Model\StartupInfoW.cs" />
-    <Compile Include="Win32\Win32Interop.cs" />
+    <Compile Include="Win32\Win32WInterop.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CreateProcessHookLib\CreateProcessHookLib.csproj">

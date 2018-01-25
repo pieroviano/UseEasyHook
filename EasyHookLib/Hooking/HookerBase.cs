@@ -6,12 +6,15 @@ using EasyHookLib.Utility;
 
 namespace EasyHookLib.Hooking
 {
-    public abstract class HookerBase : IDisposable, INotifyClient
+    public abstract class HookerBase : NotifyEventsBase, IDisposable, INotifyClient
     {
         protected bool CallBeforeNotify = true;
         protected LocalHook Hook;
 
-        public HookedEventArgs CreatedEventArgs { get; set; }
+        public event EventHandler<HookedEventArgs> IsInstalledEvent;
+        public event EventHandler<HookedEventArgs> PingEvent;
+        public event EventHandler<HookedEventArgs> ReportExceptionEvent;
+        public event EventHandler<HookedEventArgs> MethodHookedEvent;
 
         public virtual void Dispose()
         {
@@ -22,11 +25,15 @@ namespace EasyHookLib.Hooking
             }
         }
 
-        public virtual void NotifyMethodHooked(params Tuple<string, object>[] args)
+        public override void IsInstalled(int inClientPid)
         {
-            CreatedEventArgs = new HookedEventArgs(args);
+            IsInstalledEvent?.Invoke(this,
+                new HookedEventArgs(new Tuple<string, object>("ClientPid", inClientPid)));
+        }
 
-            OnMethodHooked(CreatedEventArgs);
+        public override void NotifyMethodHooked(params Tuple<string, object>[] args)
+        {
+            OnMethodHooked(new HookedEventArgs(args));
         }
 
         protected abstract object CallMethod(object[] parameters, out Tuple<string, object>[] tuplesForNotification);
@@ -42,7 +49,7 @@ namespace EasyHookLib.Hooking
                     returnValue = CallMethod(parameters, out tuplesToRaiseEvent);
                     NotifyMethodHooked(tuplesToRaiseEvent);
                 }
-                if (!CallBeforeNotify)
+                else
                 {
                     NotifyMethodHooked(tuplesToRaiseEvent);
                     returnValue = CallMethod(parameters, out tuplesToRaiseEvent);
@@ -81,11 +88,11 @@ namespace EasyHookLib.Hooking
             return Hook;
         }
 
-        public event EventHandler<HookedEventArgs> MethodHooked;
 
         protected virtual void OnMethodHooked(HookedEventArgs e)
         {
-            MethodHooked?.Invoke(this, e);
+            MethodHookedEvent?.Invoke(this, e);
         }
+
     }
 }

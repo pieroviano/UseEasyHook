@@ -33,12 +33,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataLibrary, Version=1.0.0.1, Culture=neutral, PublicKeyToken=ecfb12c72ad80b11, processorArchitecture=MSIL">
+      <HintPath>..\packages\DataLibrary.AndMore.1.0.0.1\lib\net461\DataLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="EasyHook, Version=2.7.6578.0, Culture=neutral, PublicKeyToken=4b580fca19d0b0c5, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyHook.2.7.6578.1\lib\net40\EasyHook.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -80,14 +89,13 @@
       <Project>{10c0b98b-c1ae-4598-8ac1-fdd97c07d002}</Project>
       <Name>CreateProcessHookLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CreateProcessWHookLib\CreateProcessWHookLib.csproj">
-      <Project>{b6dd82c2-a51a-4ab6-8273-1d717416fdca}</Project>
-      <Name>CreateProcessWHookLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EasyHookLib\EasyHookLib.csproj">
       <Project>{82522038-b49f-4330-aa00-b795a6b5bc76}</Project>
       <Name>EasyHookLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>cmd /c copy /y "$(ProjectDir)..\CreateProcessWHookLib\$(OutDir)\*.*" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

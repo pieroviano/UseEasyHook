@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using CreateProcessAHookLib.Win32.Model;
 using CreateProcessHookLib.Win32.Model;
+using CreateProcessHookLib.Win32.ModelA;
 
 namespace CreateProcessAHookLib.Delegates
 {

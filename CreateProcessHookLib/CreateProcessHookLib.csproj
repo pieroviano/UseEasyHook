@@ -50,7 +50,11 @@
     <Compile Include="Win32\Model\ProcessCreationFlags.cs" />
     <Compile Include="Win32\Model\ProcessInformation.cs" />
     <Compile Include="Win32\Model\SecurityAttributes.cs" />
-    <Compile Include="Win32\Win32Interop.cs" />
+    <Compile Include="Win32\ModelA\StartupInfoA.cs" />
+    <Compile Include="Win32\ModelW\StartupInfoW.cs" />
+    <Compile Include="Win32\Win32AInterop.cs" />
+    <Compile Include="Win32\Win32Utility.cs" />
+    <Compile Include="Win32\Win32WInterop.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CreateProcessHookLib.snk" />

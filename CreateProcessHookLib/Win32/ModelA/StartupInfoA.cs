@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace CreateProcessAHookLib.Win32.Model
+namespace CreateProcessHookLib.Win32.ModelA
 {
     public struct StartupInfoA
     {

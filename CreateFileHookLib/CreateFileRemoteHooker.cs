@@ -1,4 +1,5 @@
 ﻿using System;
+using CreateFileHookLib.Delegates;
 using EasyHook;
 using EasyHookLib.Hooking;
 
@@ -31,7 +32,7 @@ namespace CreateFileHookLib
 
         public override LocalHook CreateHook()
         {
-            return _createFileHookerImplementation.CreateHook(this, null);
+            return _createFileHookerImplementation.CreateHook(null, new CreateFileDelegate(CreateFileHandler));
         }
     }
 }

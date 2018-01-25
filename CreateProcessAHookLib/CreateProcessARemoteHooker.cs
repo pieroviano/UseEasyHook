@@ -1,6 +1,6 @@
 ﻿using System;
-using CreateProcessAHookLib.Win32.Model;
 using CreateProcessHookLib.Win32.Model;
+using CreateProcessHookLib.Win32.ModelA;
 using EasyHook;
 using EasyHookLib.Hooking;
 
@@ -37,7 +37,7 @@ namespace CreateProcessAHookLib
             return CreateProcessAHookerImplementation<CreateProcessARemoteHooker>.CreateProcessHandlerStatic(
                 lpApplicationName, lpCommandLine,
                 lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment,
-                lpCurrentDirectory, lpStartupInfo, pInfo);
+                lpCurrentDirectory, ref lpStartupInfo, ref pInfo);
         }
     }
 }

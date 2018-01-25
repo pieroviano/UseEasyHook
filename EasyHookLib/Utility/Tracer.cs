@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using DataLibrary.UtilityLibrary;
 using log4net;
 
 namespace EasyHookLib.Utility
@@ -37,7 +39,7 @@ namespace EasyHookLib.Utility
             }
             else
             {
-                WriteLine(obj);
+                Trace.WriteLine(obj);
             }
         }
     }

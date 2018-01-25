@@ -1,33 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EasyHookLib.Interfaces;
 using EasyHookLib.RemoteInjection;
 
 namespace EasyHookLib.Utility
 {
-        public abstract class NotifyClientBase : INotifyClient, IDisposable
+    public abstract class NotifyClientBase : NotifyEventsBase, INotifyClient, IDisposable
+    {
+        private bool _disposed;
+
+        public void Dispose()
         {
-            private bool _disposed;
-
-            public abstract void NotifyMethodHooked(params Tuple<string, object>[] args);
-
-            ~NotifyClientBase()
+            var enumerable = PostbackMessageHandler.RemoteHookerBasesToNotify.Where(e => e.Item1 == this).ToArray();
+            foreach (var element in enumerable)
             {
-                if (!_disposed)
-                    Dispose();
+                PostbackMessageHandler.RemoteHookerBasesToNotify.Remove(element);
             }
+            _disposed = true;
+        }
 
-            public void Dispose()
+        ~NotifyClientBase()
+        {
+            if (!_disposed)
             {
-                var enumerable = PostbackMessageHandler.RemoteHookerBasesToNotify.Where(e => e.Item1 == this).ToArray();
-                foreach (var element in enumerable)
-                {
-                    PostbackMessageHandler.RemoteHookerBasesToNotify.Remove(element);
-                }
-                _disposed = true;
+                Dispose();
             }
         }
+    }
 }

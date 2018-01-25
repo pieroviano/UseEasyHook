@@ -33,7 +33,7 @@ namespace CreateProcessWHookLib
         {
             return _createProcessWHookerImplementation.CreateProcessHandler(lpApplicationName, lpCommandLine,
                 lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment,
-                lpCurrentDirectory, lpStartupInfo, pInfo);
+                lpCurrentDirectory, ref lpStartupInfo, ref pInfo);
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Windows.Forms;
 using EasyHook;
 using EasyHookLib.RemoteInjection;
 using EasyHookLib.Utility;
@@ -66,6 +67,7 @@ namespace EasyHookLib.Hooking
             RemoteHooking.IContext inContext,
             string inChannelName)
         {
+            MessageBox.Show("PPP");
             // install hook...
             try
             {

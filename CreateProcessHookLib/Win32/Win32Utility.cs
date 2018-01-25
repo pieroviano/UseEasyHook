@@ -4,7 +4,7 @@ using CreateProcessHookLib.Win32.Model;
 
 namespace CreateProcessHookLib.Win32
 {
-    public static class Win32Interop
+    public static class Win32Utility
     {
 
         [DllImport("kernel32.dll")]

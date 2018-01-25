@@ -1,8 +1,7 @@
 ﻿using System;
 using CreateProcessAHookLib.Delegates;
-using CreateProcessAHookLib.Win32.Model;
-using CreateProcessHookALib;
 using CreateProcessHookLib.Win32.Model;
+using CreateProcessHookLib.Win32.ModelA;
 using EasyHook;
 using EasyHookLib.Hooking;
 
@@ -34,7 +33,7 @@ namespace CreateProcessAHookLib
         {
             return _createProcessAHookerImplementation.CreateProcessHandler(lpApplicationName, lpCommandLine,
                 lpProcessAttributes, lpThreadAttributes, bInheritHandles, dwCreationFlags, lpEnvironment,
-                lpCurrentDirectory, lpStartupInfo, pInfo);
+                lpCurrentDirectory, ref lpStartupInfo, ref pInfo);
         }
     }
 }

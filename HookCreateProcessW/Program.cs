@@ -1,53 +1,81 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
 using CreateProcessHookLib.Win32;
 using CreateProcessHookLib.Win32.Model;
-using CreateProcessWHookLib;
-using CreateProcessWHookLib.Win32.Model;
+using CreateProcessHookLib.Win32.ModelW;
+using DataLibrary.UtilityLibrary;
+using EasyHook;
 using EasyHookLib.Model;
 using EasyHookLib.RemoteInjection;
-using Win32Interop = CreateProcessWHookLib.Win32.Win32Interop;
+using EasyHookLib.Utility;
 
 namespace HookCreateProcessW
 {
     public class Program
     {
+        private static bool _noHook;
+        private static readonly string _dllWithHook = "CreateProcessWHookLib.dll";
 
-        private static void CreateProcessWHooker_ProcessCreated(object sender, HookedEventArgs e)
+        public static void CreateProcessWHooker_ProcessCreated(object sender, HookedEventArgs e)
         {
             var processId = Convert.ToInt32(e.Entries["DwProcessId"]);
             Console.WriteLine($"Process ID (PID): {processId}");
             Console.WriteLine($"Process Handle: {e.Entries["HProcess"]}");
-            var dllToInject = "CreateProcessWHookLib.dll";
+            Console.WriteLine("Process Thread : " + e.Entries["HThread"]);
+            IntPtr threadHandle = (IntPtr)e.Entries["HThread"];
+            var dllToInject = _dllWithHook;
             var notifyClient = new NotifyClient();
             string channelName;
-            var formattableString = RemoteInjector.InjectDll(dllToInject, "", ref processId, out channelName, notifyClient);
+            var formattableString =
+                RemoteInjector.InjectDll(dllToInject, "", ref processId, out channelName, notifyClient);
             if (!string.IsNullOrEmpty(formattableString))
             {
                 Console.WriteLine(formattableString);
             }
-
         }
 
-        private static void DoCreateProcessW()
+        private static void DoCreateProcessW(string exeToLaunch, string exeArguments)
         {
             var si = new StartupInfoW();
             var pi = new ProcessInformation();
-            Win32Interop.CreateProcessW("C:\\WINDOWS\\SYSTEM32\\Cmd.exe", "/c Notepad.exe", IntPtr.Zero, IntPtr.Zero,
+            bool processW = Win32WInterop.CreateProcessW(exeToLaunch, exeArguments, IntPtr.Zero, IntPtr.Zero,
                 false, 0, IntPtr.Zero,
                 null, ref si, ref pi);
+            Debug.Assert(processW, "Error creating process");
         }
 
-        public static void Main()
+        public static void Main(string[] args)
         {
-            var createProcessWHooker = new CreateProcessWHooker();
-            createProcessWHooker.MethodHooked += CreateProcessWHooker_ProcessCreated;
-            var hook = createProcessWHooker.CreateHook();
+            var exeToLaunch = AppConfig.GetValueFromArguments(args, "ExeToLaunch");
+            exeToLaunch = string.Format(exeToLaunch, Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
+#if DEBUG
+                "Debug"
+#else
+                "Release"
+#endif
+                );
+            var exeArguments = AppConfig.GetValueFromArguments(args, "ExeArguments");
+            LocalHook hook = null;
+            _noHook = AppConfig.GetValueFromArguments(args, "NoHook") == "true";
+            if (!_noHook)
+            {
+                object createProcessWHooker;
+                var type = EventHandlerInjector.AttachHandlerToEventDynamically(_dllWithHook, "CreateProcessWHooker", "MethodHookedEvent", typeof(Program),
+                    "CreateProcessWHooker_ProcessCreated", null, out createProcessWHooker);
+                var memberInfo = type.GetMethod("CreateHook");
+                Debug.Assert(memberInfo != null, "memberInfo != null");
+                hook = (LocalHook) memberInfo.Invoke(createProcessWHooker, new object[0]);
+            }
 
-            DoCreateProcessW();
+            DoCreateProcessW(exeToLaunch, exeArguments);
 
             Console.Write("\nPress <enter> to uninstall hook and exit.");
             Console.ReadLine();
-            hook.Dispose();
+            hook?.Dispose();
             Console.ReadLine();
         }
     }
