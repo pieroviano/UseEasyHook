@@ -67,7 +67,7 @@ namespace EasyHookLib.Hooking
             RemoteHooking.IContext inContext,
             string inChannelName)
         {
-            MessageBox.Show("PPP");
+            MessageBox.Show(Assembly.GetExecutingAssembly().Location);
             // install hook...
             try
             {

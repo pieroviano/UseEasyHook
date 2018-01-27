@@ -7,11 +7,12 @@ using System.Windows.Forms;
 using CreateProcessHookLib.Win32;
 using CreateProcessHookLib.Win32.Model;
 using CreateProcessHookLib.Win32.ModelW;
-using DataLibrary.UtilityLibrary;
 using EasyHook;
 using EasyHookLib.Model;
 using EasyHookLib.RemoteInjection;
 using EasyHookLib.Utility;
+using UtilityLibrary.Configuration;
+using UtilityLibrary.Configuration.Arguments;
 
 namespace HookCreateProcessW
 {
@@ -50,7 +51,7 @@ namespace HookCreateProcessW
 
         public static void Main(string[] args)
         {
-            var exeToLaunch = AppConfig.GetValueFromArguments(args, "ExeToLaunch");
+            var exeToLaunch = ArgumentGetter.Instance.GetValueFromArguments(args, "ExeToLaunch");
             exeToLaunch = string.Format(exeToLaunch, Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),
 #if DEBUG
                 "Debug"
@@ -58,9 +59,9 @@ namespace HookCreateProcessW
                 "Release"
 #endif
                 );
-            var exeArguments = AppConfig.GetValueFromArguments(args, "ExeArguments");
+            var exeArguments = ArgumentGetter.Instance.GetValueFromArguments(args, "ExeArguments");
             LocalHook hook = null;
-            _noHook = AppConfig.GetValueFromArguments(args, "NoHook") == "true";
+            _noHook = ArgumentGetter.Instance.GetValueFromArguments(args, "NoHook") == "true";
             if (!_noHook)
             {
                 object createProcessWHooker;

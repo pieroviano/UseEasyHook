@@ -2,8 +2,8 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using DataLibrary.UtilityLibrary;
 using log4net;
+using UtilityLibrary.Configuration;
 
 namespace EasyHookLib.Utility
 {
